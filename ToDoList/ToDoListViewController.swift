@@ -12,8 +12,16 @@ class ToDoListViewController: UITableViewController {
 
     var itemsArray = ["Swift 4.2","Swift 5 ","SwiftUI"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String]
+        {
+            itemsArray = items
+        }
+        //tableView.showsVerticalScrollIndicator = false
        
     }
     //MARK:- TableView DataSource Methods
@@ -52,6 +60,7 @@ class ToDoListViewController: UITableViewController {
             //What will happen when user clicks the add Button on UIAlert
             
             self.itemsArray.append(textField.text!)
+            self.defaults.set(self.itemsArray, forKey: "TodoListArray")
             self.tableView.reloadData()
 
             //            print(textField.text!)
